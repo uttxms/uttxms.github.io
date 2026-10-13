@@ -1,0 +1,9 @@
+---
+import { Image, getImage } from 'astro:assets';
+const { photo, sizes = '(max-width: 700px) 50vw, 25vw', eager = false } = Astro.props;
+const full = await getImage({ src: photo.src, width: 2000, format: 'webp' });
+---
+<button class="tile" type="button" data-photo data-full={full.src} data-place={photo.place} data-date={photo.label} data-alt={photo.alt} aria-label={`View photo: ${photo.place}, ${photo.label}`}>
+  <Image src={photo.src} alt={photo.alt} widths={[300, 500, 800]} sizes={sizes} format="webp" loading={eager ? 'eager' : 'lazy'} style={photo.focus ? `object-position:${photo.focus}` : undefined} />
+  <span class="cap"><b>{photo.place}</b><span>{photo.label}</span></span>
+</button>

@@ -1,0 +1,52 @@
+---
+import '@fontsource-variable/dm-sans';
+import '@fontsource/big-shoulders-display/latin-700';
+import '@fontsource/big-shoulders-display/latin-900';
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+const { title = site.name, description = site.description, person = false, footerLinks = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const image = new URL('/og.jpg', Astro.site).href;
+const personData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: Astro.site?.href,
+  image,
+  description: site.description,
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Simon Fraser University' },
+  sameAs: site.links.filter((l) => l.href.startsWith('http')).map((l) => l.href),
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0d0306" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    {person && <script type="application/ld+json" set:html={JSON.stringify(personData)} />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <Footer links={footerLinks} />
+  </body>
+</html>
