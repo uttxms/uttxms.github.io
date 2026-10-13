@@ -56,7 +56,7 @@ One-time setup in the repo on GitHub: Settings, Pages, Source set to **GitHub Ac
 | [src/components/](src/components/) | Photo tile and full-screen viewer |
 | [src/styles/global.css](src/styles/global.css) | Colours, fonts and the photo hover effect |
 | [public/](public/) | Favicon, CNAME, robots.txt |
-| [public/og.jpg](public/og.jpg) | Preview image shown when the link is shared |
+| [public/embed.jpg](public/embed.jpg) | Preview image shown when the link is shared |
 
 ## Colours and fonts
 
