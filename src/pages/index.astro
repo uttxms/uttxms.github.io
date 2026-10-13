@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import PhotoTile from '../components/PhotoTile.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { Image } from 'astro:assets';
+import portrait from '../photos/portrait.png';
+import { site } from '../data/site';
+import { photos } from '../data/photos';
+const preview = photos.slice(0, 6);
+---
+<Base person>
+  <main class="bento">
+    <section class="card name">
+      <h1>Uttam<br />Sharma</h1>
+      <p>{site.tagline}</p>
+    </section>
+    <figure class="card pic">
+      <Image src={portrait} alt="Uttam in a navy jacket and maroon sweater" widths={[500, 800, 1100]} sizes="(max-width: 820px) 100vw, 33vw" loading="eager" fetchpriority="high" />
+    </figure>
+    <section class="card about">
+      <h2>About</h2>
+      {site.about.map((p) => <p>{p}</p>)}
+    </section>
+    <section class="card gallery">
+      <div class="gal-head">
+        <h2>Gallery</h2>
+        <a class="all" href="/gallery/">View all {photos.length} photo{photos.length === 1 ? '' : 's'}</a>
+      </div>
+      <div class="gal-grid">
+        {preview.map((p) => <PhotoTile photo={p} eager sizes="(max-width: 820px) 45vw, 18vw" />)}
+      </div>
+    </section>
+    <section class="card contact">
+      <h2>Find me</h2>
+      <nav>{site.links.map((l) => <a href={l.href}>{l.label}</a>)}</nav>
+    </section>
+  </main>
+  <Lightbox />
+</Base>
+
+<style>
+  .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; max-width: 1280px; margin: auto; }
+  .name { grid-column: span 8; min-height: 460px; display: flex; flex-direction: column; justify-content: space-between; background: var(--red); }
+  h1 { font: 900 clamp(72px, 15vw, 220px)/.86 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
+  .name p { font-weight: 700; font-size: 18px; max-width: 30ch; }
+  .pic { grid-column: span 4; padding: 0; min-height: 460px; }
+  .pic :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+  .about { grid-column: span 5; }
+  .about p { color: #ecd0d5; max-width: 46ch; margin-bottom: .8em; }
+  .gallery { grid-column: span 7; }
+  .gal-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .all { color: var(--red-bright); text-decoration: none; font-weight: 500; border-bottom: 1px solid transparent; transition: border-color .2s; }
+  .all:hover { border-color: var(--red-bright); }
+  .gal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .gal-grid :global(.tile) { aspect-ratio: 1; }
+  .contact { grid-column: span 12; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .contact h2 { font-size: 44px; color: var(--ink); margin: 0; margin-right: auto; }
+  .contact nav { display: flex; flex-wrap: wrap; gap: 12px; }
+  .contact nav a { padding: 14px 22px; border-radius: 99px; border: 1.5px solid var(--line); text-decoration: none; font-weight: 500; transition: background .2s, color .2s, border-color .2s; }
+  .contact nav a:hover { background: var(--red-bright); color: #1a0207; border-color: var(--red-bright); }
+  @media (max-width: 820px) {
+    .bento > * { grid-column: 1 / -1; }
+    .pic { min-height: 0; aspect-ratio: 4 / 5; }
+    .name { min-height: 300px; }
+  }
+  @media (max-width: 560px) {
+    .card { padding: 22px; border-radius: 24px; }
+    .name { min-height: 260px; }
+    .name p { font-size: 17px; }
+    .gal-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact h2 { font-size: 36px; flex-basis: 100%; }
+    .contact nav { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .contact nav a { text-align: center; padding: 14px 12px; }
+  }
+</style>

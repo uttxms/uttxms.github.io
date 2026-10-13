@@ -1,74 +1,63 @@
-# uttxms.github.io
+# uttamsharma.com
 
-This is the personal portfolio website for Uttam Sharma, a Canadian Computer Science student at Simon Fraser University.  
-The site showcases my bio, résumé, projects, skills, passions, photo gallery, and contact information.
+Uttam Sharma's personal website. Built with [Astro](https://astro.build) and hosted on GitHub Pages.
 
-## Features
+The site has a home page (name, portrait, about, a gallery preview and contact links) and a full `/gallery` page with a year filter and a full-screen photo viewer.
 
-- **About Me:** Overview, résumé, passions, and skills.
-- **Projects:** Highlights of personal and open-source projects.
-- **Photo Gallery:** A responsive gallery of personal photos and hobbies.
-- **Contact:** Multiple ways to connect (GitHub, LinkedIn, Email, Discord, Instagram).
-- **Responsive Design:** Looks great on all devices.
-- **Modern UI:** Custom gradient backgrounds, section cards, and interactive elements.
-- **Accessibility:** All images have descriptive alt text, and navigation is keyboard-friendly.
+## Run it locally
 
-## Tech Stack
+You need Node.js 22 or newer.
 
-- React (with TypeScript)
-- Vite
-- Custom CSS
+```sh
+npm install
+npm run dev       # live preview at http://localhost:4321
+npm run build     # builds the site into dist/
+npm run preview   # serves the built site
+```
 
-## Development & Build Instructions
+## Change the text and links
 
-To run or build this website locally:
+Edit [src/data/site.ts](src/data/site.ts). It holds the tagline, the About paragraphs and the contact links. To add a link, add a line to `links`.
 
-1. **Clone the repository:**
+## Add a photo
+
+1. Remove location data from the original first. Photos straight from a phone usually carry exact GPS coordinates, and the originals in this folder are public on GitHub.
    ```sh
-   git clone https://github.com/uttxms/uttxms.github.io.git
-   cd uttxms.github.io
+   exiftool -all= photo.jpg
    ```
-
-2. **Install dependencies:**
-   ```sh
-   npm install
+2. Copy the file into [src/photos/](src/photos/). Use lowercase names with hyphens, like `stanley-park.jpg`.
+3. Add one entry to [src/data/photos.ts](src/data/photos.ts):
+   ```ts
+   { file: 'stanley-park.jpg', place: 'Stanley Park, Vancouver', date: '2025-11', alt: 'Describe the photo for screen readers', focus: '50% 40%' },
    ```
+   - `place` and `date` (`YYYY-MM`) become the caption under the photo.
+   - `alt` is the description read aloud to people using screen readers.
+   - `focus` is optional. It sets which part of the photo stays in view when it is cropped to a square tile, for example `'25% 40%'` for left of centre. The full-screen viewer always shows the whole photo.
 
-3. **Start the development server:**
-   ```sh
-   npm run dev
-   ```
-   This will launch the site at `http://localhost:5173` (or another port if specified).
+Photos sort newest first by `date`. The home page shows the 6 newest. The gallery page shows all of them and adds a filter button for each year.
 
-4. **Build for production:**
-   ```sh
-   npm run build
-   ```
-   The static site will be output to the `dist` folder.
+The build resizes every photo to small webp files and removes all metadata from the published copies.
 
-5. **Preview the production build locally:**
-   ```sh
-   npm run preview
-   ```
+## Deploy
 
----
+Pushing to `main` publishes the site through [.github/workflows/deploy.yml](.github/workflows/deploy.yml).
 
-## package.json Scripts
+One-time setup in the repo on GitHub: Settings, Pages, Source set to **GitHub Actions**. [public/CNAME](public/CNAME) points the site at uttamsharma.com.
 
-| Script         | Description                                 |
-|----------------|---------------------------------------------|
-| `dev`|Start the local development server using Vite|
-| `build`| Build the site for production|
-| `preview`|Preview the production build locally|
-| `format:fix` |Auto prettify the code|
-| `lint:fix`|Run eslint on the code|
+## Where things are
 
-You can run any script with `npm run <script>`.
+| Path | What it holds |
+| --- | --- |
+| [src/data/site.ts](src/data/site.ts) | Tagline, About text, links |
+| [src/data/photos.ts](src/data/photos.ts) | The list of photos and captions |
+| [src/photos/](src/photos/) | Original photo files |
+| [src/pages/index.astro](src/pages/index.astro) | Home page layout and styles |
+| [src/pages/gallery.astro](src/pages/gallery.astro) | Gallery page and year filter |
+| [src/components/](src/components/) | Photo tile and full-screen viewer |
+| [src/styles/global.css](src/styles/global.css) | Colours, fonts and the photo hover effect |
+| [public/](public/) | Favicon, CNAME, robots.txt |
+| [public/og.jpg](public/og.jpg) | Preview image shown when the link is shared |
 
-## License
+## Colours and fonts
 
-This website and its source code are licensed under the [MIT License](LICENSE).
-If you use this website template, please link back to this repository and my website. I chose the MIT License because I am a big supporter and user of open source software. The MIT License is simple, permissive, and encourages sharing, collaboration, and learning within the developer community. By using this license, I want to give others the same freedom to use, modify, and build upon my work as I have enjoyed with open source projects.
-
----
-© 2025 Uttam Sharma
+Colours are defined at the top of [src/styles/global.css](src/styles/global.css): near-black oxblood background, crimson `#a30f26` for the name block, and a lighter coral for links and hover states. Headings use Big Shoulders Display and body text uses DM Sans, both installed through npm.

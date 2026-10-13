@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found · Uttam Sharma" description="This page doesn't exist.">
+  <main>
+    <h1>404</h1>
+    <p>That page doesn't exist.</p>
+    <a href="/">Back to the home page</a>
+  </main>
+</Base>
+
+<style>
+  main { max-width: 1280px; margin: 12vh auto 0; padding: 0 8px; }
+  h1 { font: 900 clamp(96px, 22vw, 280px)/.85 var(--display); color: var(--red); }
+  p { font-size: 22px; margin: 20px 0 24px; }
+  a { display: inline-block; padding: 14px 22px; border-radius: 99px; border: 1.5px solid var(--line); text-decoration: none; font-weight: 500; transition: background .2s, color .2s, border-color .2s; }
+  a:hover { background: var(--red-bright); color: #1a0207; border-color: var(--red-bright); }
+</style>
