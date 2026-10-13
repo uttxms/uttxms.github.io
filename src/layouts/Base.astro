@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
 const { title = site.name, description = site.description, person = false, footerLinks = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const image = new URL('/og.jpg', Astro.site).href;
+const image = new URL('/embed.jpg', Astro.site).href;
 const personData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
