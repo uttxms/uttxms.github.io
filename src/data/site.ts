@@ -2,7 +2,7 @@
 export const site = {
   name: 'Uttam Sharma',
   description: 'Uttam Sharma, mathematics major at SFU in Metro Vancouver. Photos and links.',
-  tagline: 'A Canadian Mathematics major at Simon Fraser University.',
+  tagline: 'A Canadian Mathematics student at Simon Fraser University.',
   about: [
     "I'm a Canadian Mathematics major at Simon Fraser University.",
     "In my free time I'm usually tinkering with technology, hiking somewhere, or losing an evening to a video game. I also enjoy listening to music and playing the clarinet.",
